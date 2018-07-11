@@ -30,12 +30,11 @@ public class home_screen extends Activity implements View.OnClickListener{
     Switch relaySwitch;
     Button btnEnableRelay;
 
-
-
+    TcpClient tcpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        tcpClient = new TcpClient();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         TextView textViewCustom = (TextView) findViewById(R.id.textView);
@@ -57,29 +56,23 @@ public class home_screen extends Activity implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnEnableRelay :
-                new SendEnable().execute();
+                Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try  {
+                            tcpClient.sendToPort("EnableRelay");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                thread.start();
+//                new SendEnable().execute();
         }
     }
-//
-//    public void sendToPort(String str) throws IOException {
-//        Socket socket = null;
-//        OutputStreamWriter osw;
-//        System.out.println("RAN-1");
-//        try {
-//            socket = new Socket("192.168.1.11", 5005);
-//            osw =new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-//            System.out.println(str);
-//            osw.write(str, 0, str.length());
-//            osw.flush();
-//            System.out.println("RAN-2");
-//        } catch (IOException e) {
-//            System.err.print(e);
-//        } finally {
-//            System.out.println("RAN-3");
-//            if (socket != null) {
-//                socket.close();
-//            }
-//        }
+
 
 
 

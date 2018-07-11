@@ -3,6 +3,7 @@ package com.example.gaganbhat.homeactivator;
 import android.util.Log;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -124,9 +125,33 @@ public class TcpClient {
 
     }
 
+    //
+
+
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity
     //class at on asynckTask doInBackground
     public interface OnMessageReceived {
         public void messageReceived(String message);
+    }
+
+    public void sendToPort(String str) throws IOException {
+        Socket socket = null;
+        OutputStreamWriter osw;
+        System.out.println("RAN-1");
+        try {
+            socket = new Socket("192.168.1.11", 5005);
+            osw = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+            System.out.println(str);
+            osw.write(str, 0, str.length());
+            osw.flush();
+            System.out.println("RAN-2");
+        } catch (IOException e) {
+            System.err.print(e);
+        } finally {
+            System.out.println("RAN-3");
+            if (socket != null) {
+                socket.close();
+            }
+        }
     }
 }
