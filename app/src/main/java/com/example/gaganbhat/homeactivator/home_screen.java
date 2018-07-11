@@ -32,27 +32,27 @@ public class home_screen extends Activity {
         textViewCustom.setTypeface(bebasNeue);
 
         final Switch relaySwitch = (Switch) findViewById(R.id.switchRelay);
-
-        Handler handler = new Handler();
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                if (relaySwitch.isChecked()) {
-                    try {
-                        sendPacket("EnableRelay");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        sendPacket("DisableRelay");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
+//
+//        Handler handler = new Handler();
+//
+//        Runnable r = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (relaySwitch.isChecked()) {
+//                    try {
+//                        sendPacket("EnableRelay");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    try {
+//                        sendPacket("DisableRelay");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        };
 
         }
 
