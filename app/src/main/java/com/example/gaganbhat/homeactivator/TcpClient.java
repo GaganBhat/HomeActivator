@@ -17,7 +17,7 @@ import java.net.Socket;
  */
 public class TcpClient {
 
-    public static final String SERVER_IP = "192.168.1.6"; //your computer IP address
+    public static final String SERVER_IP = "192.168.1.11"; //your computer IP address
     public static final int SERVER_PORT = 5005;
     // message to send to the server
     private String mServerMessage;
@@ -33,9 +33,9 @@ public class TcpClient {
     /**
      * Constructor of the class. OnMessagedReceived listens for the messages received from server
      */
-    public TcpClient(OnMessageReceived listener) {
-        mMessageListener = listener;
-    }
+//    public TcpClient(OnMessageReceived listener) {
+//        mMessageListener = listener;
+//    }
 
     /**
      * Sends the message entered by client to the server
@@ -45,6 +45,7 @@ public class TcpClient {
     public void sendMessage(String message) {
         if (mBufferOut != null && !mBufferOut.checkError()) {
             mBufferOut.println(message);
+            System.out.println("Sent");
             mBufferOut.flush();
         }
     }
