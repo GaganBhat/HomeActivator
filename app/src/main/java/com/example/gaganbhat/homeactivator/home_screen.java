@@ -43,12 +43,34 @@ public class home_screen extends Activity {
 
         relaySwitch = (Switch) findViewById(R.id.switchRelay);
         btnEnableRelay = (Button) findViewById(R.id.btnEnableRelay);
-        
+
 
         Handler handler = new Handler();
         handler.postDelayed(r, 500);
 
         }
+
+
+
+    public static void sendToPort(String str) throws IOException {
+        Socket socket = null;
+        OutputStreamWriter osw;
+        System.out.println("RAN");
+        try {
+            socket = new Socket("192.168.1.11", 5005);
+            osw =new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+            System.out.println(str);
+            osw.write(str, 0, str.length());
+            osw.flush();
+        } catch (IOException e) {
+            System.err.print(e);
+        } finally {
+            if (!(socket == null)){
+                socket.close();
+            }
+        }
+
+    }
 
 
     Runnable r = new Runnable() {
@@ -70,25 +92,5 @@ public class home_screen extends Activity {
             }
         }
     };
-
-    public static void sendToPort(String str) throws IOException {
-        Socket socket = null;
-        OutputStreamWriter osw;
-        System.out.println("RAN");
-        try {
-            socket = new Socket("192.168.1.11", 5005);
-            osw =new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-            System.out.println(str);
-            osw.write(str, 0, str.length());
-            osw.flush();
-        } catch (IOException e) {
-            System.err.print(e);
-        } finally {
-            if (!(socket == null)){
-                socket.close();
-            }
-        }
-
-    }
 
 }
