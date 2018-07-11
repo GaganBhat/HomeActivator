@@ -44,6 +44,12 @@ public class home_screen extends Activity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    try {
+                        sendPacket("DisableRelay");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
