@@ -29,8 +29,10 @@ public class home_screen extends Activity implements View.OnClickListener{
     Socket socket;
     Switch relaySwitch;
     Button btnEnableRelay;
+    Button btnDisableRelay;
 
     TcpClient tcpClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +45,17 @@ public class home_screen extends Activity implements View.OnClickListener{
 
         relaySwitch = (Switch) findViewById(R.id.switchRelay);
         btnEnableRelay = (Button) findViewById(R.id.btnEnableRelay);
+        btnDisableRelay = (Button) findViewById(R.id.btnDisableRelay);
 
         btnEnableRelay.setOnClickListener(this);
-
-        Handler handler = new Handler();
-        handler.postDelayed(r, 500);
-
+        btnDisableRelay.setOnClickListener(this);
         }
-
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnEnableRelay :
-                Thread thread = new Thread(new Runnable() {
+                Thread enableThread = new Thread(new Runnable() {
 
                     @Override
                     public void run() {
@@ -68,34 +67,26 @@ public class home_screen extends Activity implements View.OnClickListener{
                     }
                 });
 
-                thread.start();
+                enableThread.start();
+                break;
+
+            case R.id.btnDisableRelay :
+                Thread disableThread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try  {
+                            tcpClient.sendToPort("Disable");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                disableThread.start();
 //                new SendEnable().execute();
         }
     }
-
-
-
-
-
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            if (relaySwitch.isChecked()) {
-                Toast.makeText(getApplicationContext(), "CHECKED",Toast.LENGTH_SHORT).show();
-//                try {
-//                    sendToPort("EnableRelay");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            } else {
-//                try {
-//                    sendToPort("DisableRelay");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-            }
-        }
-    };
 
 
 }
